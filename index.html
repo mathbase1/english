@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GCSE English Paper 1 Q2 Self-Marker · v10</title>
+    <meta name="description" content="Static GitHub Pages self-marking tool for AQA GCSE English Language Paper 1 Question 2.">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+      window.GCSE_MARKER_RULES_URL = "rules.json";
+    </script>
+    <script src="https://unpkg.com/compromise"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script type="module">
+      window.__GCSE_WINK_READY_PROMISE = (async () => {
+        try {
+          const [winkModule, modelModule] = await Promise.all([
+            import("https://cdn.skypack.dev/wink-nlp@2.4.0"),
+            import("https://cdn.skypack.dev/wink-eng-lite-web-model@1.8.1")
+          ]);
+          window.__GCSE_WINK__ = {
+            winkNLP: winkModule.default,
+            model: modelModule.default
+          };
+          return window.__GCSE_WINK__;
+        } catch (error) {
+          window.__GCSE_WINK__ = {
+            ok: false,
+            error: String(error && error.message ? error.message : error)
+          };
+          return window.__GCSE_WINK__;
+        }
+      })();
+    </script>
+    <script src="config.js"></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="page-header card">
+        <p class="eyebrow">Static GitHub Pages build · no server · no AI API · hybrid rule engine</p>
+        <h1>GCSE English Language Paper 1 Question 2 Self-Marker</h1>
+        <p class="lead">
+          This build uses a browser-side hybrid marker: analysis units + rule-based AO2 scoring + fuzzy quotation matching + a calibration helper. It separates mention from analysis, relevant evidence from selective or judicious evidence, and clear explanation from genuinely perceptive interpretation.
+        </p>
+        <p id="systemStatus" class="status-line">Loading rule engine…</p>
+      </header>
+
+      <section class="card">
+        <h2>Question</h2>
+        <p id="questionPrompt"></p>
+      </section>
+
+      <section class="card">
+        <h2>Extract</h2>
+        <div id="sourceExtract" class="extract-box"></div>
+      </section>
+
+      <section class="card">
+        <h2>Developer test prompts used for calibration</h2>
+        <p class="muted-note">
+          These are extra prompt variants used to stress-test the rule engine against slightly different AO2 emphases.
+        </p>
+        <ul id="developerQuestions" class="developer-questions"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Student answer</h2>
+        <label class="sr-only" for="answerInput">Student answer</label>
+        <textarea id="answerInput" rows="16" placeholder="Paste or type the student response here."></textarea>
+        <div class="button-row">
+          <button id="markButton" type="button">Mark answer</button>
+          <button id="calibrationButton" type="button" class="secondary">Run 50-case calibration</button>
+          <button id="clearButton" type="button" class="ghost">Clear</button>
+        </div>
+      </section>
+
+      <section class="card rubric-card">
+        <h2>What this build now enforces</h2>
+        <div class="rubric-grid">
+          <div>
+            <h3>Will not over-reward</h3>
+            <ul>
+              <li>long or confident writing on its own</li>
+              <li>basic quotation use being called “judicious”</li>
+              <li>coverage without analysis</li>
+              <li>clear explanation being mistaken for perceptive insight</li>
+              <li>feature spotting without precise meaning</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Will still allow</h3>
+            <ul>
+              <li>short but valid analysis</li>
+              <li>quote-then-explain structure across adjacent sentences</li>
+              <li>grounded inference such as fantasy, claustrophobia, dehumanisation, and alienation</li>
+              <li>some generic GCSE phrasing if the actual analysis is good enough</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Level 4 only if</h3>
+            <ul>
+              <li>analysis is consistently accurate and grounded</li>
+              <li>there are multiple developed or perceptive units</li>
+              <li>evidence is selective rather than merely relevant</li>
+              <li>a conceptual thread is sustained across the answer</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="report" aria-live="polite"></section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
